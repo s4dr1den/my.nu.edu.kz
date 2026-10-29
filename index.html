@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#0d5364">
+  <title>Nazarbayev University — Student Profile</title>
+  <link rel="icon" href="nazarbayev-university-logo.png">
+  <style>
+    :root {
+      --teal: #3299a0;
+      --deep: #10465a;
+      --link: #24718c;
+      --brown: #81583f;
+      --line: #dedede;
+      --muted: #7297a5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: #fff; color: #333;
+      font: 14px Arial, Helvetica, sans-serif;
+    }
+    .top-strip { height: 30px; background: var(--brown); }
+    .brand {
+      min-height: 124px; display: flex; flex-direction: column;
+      align-items: center; padding: 13px 16px 10px;
+      background: #fff;
+    }
+    .brand-mark {
+      display: flex; align-items: center; gap: 12px; color: #555;
+      margin: 0 auto 17px; font-family: Georgia, 'Times New Roman', serif;
+      letter-spacing: .4px; font-size: 10px; line-height: 1.05;
+    }
+    .brand-logo {
+      width: 19px; height: 25px; object-fit: contain;
+    }
+    .brand-name {
+      max-width: 110px; font-size: 10px; line-height: 1.15;
+      text-align: left;
+    }
+    .user-select {
+      border: 1px solid #9eb8bc; padding: 6px 10px; min-width: 100px;
+      background: #fff; color: #333; border-radius: 0;
+      font-size: 9px;
+    }
+    .logout { margin-top: 14px; color: #333; font-size: 10px; }
+    .logout span { color: var(--teal); font-size: 12px; margin-left: 3px; }
+    .decorative-strip {
+      height: 11px;
+      background-color: #f0f3f3;
+      background-image:
+        radial-gradient(ellipse at 25% 100%, transparent 0 4px, #dce5e5 4px 5px, transparent 5px 8px),
+        radial-gradient(ellipse at 75% 0, transparent 0 4px, #dce5e5 4px 5px, transparent 5px 8px);
+      background-size: 16px 8px;
+      border-top: 1px solid #e1e7e7;
+      border-bottom: 1px solid #dce3e3;
+    }
+    .menu-bar {
+      background: var(--teal); color: #fff; padding: 9px 15px;
+      font-size: 15px; display: flex; gap: 10px; align-items: center;
+      box-shadow: 0 1px 2px #0002;
+    }
+    .hamburger { font-size: 23px; line-height: 18px; font-weight: bold; }
+    .notice {
+      max-width: 700px; margin: 12px auto 0; padding: 8px 12px;
+      border: 1px solid #e5d8ae; background: #fff9e9; color: #725c27;
+      font-size: 11px; line-height: 1.35;
+    }
+    main { max-width: 700px; margin: 0 auto; padding: 0 12px 32px; }
+    .crumb { margin: 15px 0 14px; color: #333; }
+    .profile {
+      background: var(--deep); color: #fff; text-align: center;
+      padding: 20px 16px 16px; min-height: 230px;
+    }
+    .profile h1 { font-size: 16px; margin: 0 0 12px; }
+    .student-id { color: #91c7d4; font-weight: bold; font-size: 12px; margin-bottom: 16px; }
+    .portrait {
+      display: block; width: 76px; height: 98px; margin: 0 auto 12px;
+      object-fit: cover; object-position: center 28%; background: #fff;
+      border: 2px solid #fff;
+    }
+    .profile-links { color: #9dc7d3; font-size: 12px; line-height: 1.35; }
+    .tabs { display: flex; margin: 26px 12px 12px; }
+    .tab {
+      flex: 1; padding: 13px 8px; border: 1px solid #d7d7d7;
+      background: #fff; color: #333; font-size: 12px; text-align: center;
+      cursor: pointer;
+    }
+    .tab.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .section {
+      border: 1px solid var(--line); margin: 0 12px 4px; padding: 18px 20px 14px;
+    }
+    .section-head { display: flex; justify-content: space-between; align-items: center; }
+    .section h2 { font-weight: normal; font-size: 16px; margin: 0; }
+    .toggle {
+      border: 1px solid #999; border-radius: 50%; width: 20px; height: 20px;
+      display: grid; place-items: center; padding: 0;
+      line-height: 1; font-size: 18px; color: #777; background: #fff;
+      cursor: pointer;
+    }
+    .underline { width: 38px; height: 3px; background: var(--teal); margin: 10px 0 12px; }
+    .links { display: grid; gap: 7px; }
+    .links button {
+      border: 0; background: none; padding: 0; color: var(--link);
+      text-align: left; font: inherit; font-size: 12px; cursor: pointer;
+    }
+    .collapsed .links, .collapsed .underline { display: none; }
+    .footer { margin-top: 260px; }
+    .contacts {
+      background: #dedede; padding: 7px 10px; font-weight: bold;
+      display: flex; justify-content: space-between; color: #555;
+    }
+    .social {
+      background: var(--brown); color: #fff; text-align: center;
+      padding: 14px 8px 10px; font-size: 12px;
+    }
+    .social-icons { letter-spacing: 12px; font-weight: bold; font-size: 16px; margin-bottom: 10px; }
+    .toast {
+      position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #263238; color: #fff; padding: 12px 16px; border-radius: 6px;
+      box-shadow: 0 4px 18px #0003; max-width: calc(100% - 32px);
+      display: none; z-index: 5; text-align: center;
+    }
+    @media (min-width: 600px) {
+      .brand { min-height: 124px; }
+      main { padding-left: 18px; padding-right: 18px; }
+      .profile { padding-top: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-strip"></div>
+  <header class="brand">
+    <div class="brand-mark">
+      <img class="brand-logo" src="nazarbayev-university-logo.png" alt="Nazarbayev University logo">
+      <div class="brand-name">NAZARBAYEV<br>UNIVERSITY</div>
+    </div>
+    <select class="user-select" aria-label="Profile">
+      <option>Sadriden Assanali</option>
+    </select>
+    <div class="logout">Log out<span>⏻</span></div>
+  </header>
+  <div class="decorative-strip" aria-hidden="true"></div>
+  <div class="menu-bar"><span class="hamburger">☰</span><span>MENU</span></div>
+  <main>
+    <div class="crumb">&gt; My account</div>
+    <section class="profile">
+      <h1>Sadriden Assanali</h1>
+      <div class="student-id">ID:2023288585</div>
+      <img class="portrait" src="profile-photo.jpeg" alt="Profile photo of Садриден Асанали">
+      <div class="profile-links">Accession services agreement<br>My account using regulation</div>
+    </section>
+    <div class="tabs">
+      <button class="tab active" data-tab="make">MAKE A PAYMENT</button>
+      <button class="tab" data-tab="history">MY PAYMENTS</button>
+    </div>
+    <div id="tab-content">
+      <section class="section">
+        <div class="section-head"><h2>SPORTS</h2><button class="toggle" aria-label="Collapse section">−</button></div>
+        <div class="underline"></div>
+        <div class="links">
+          <button data-message="Demo only: no payment or booking is connected.">Multi-visit pass</button>
+          <button data-message="Demo only: no payment or booking is connected.">All access pass 3m</button>
+          <button data-message="Demo only: no payment or booking is connected.">All access pass 6m</button>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-head"><h2>OTHER</h2><button class="toggle" aria-label="Collapse section">−</button></div>
+        <div class="underline"></div>
+        <div class="links">
+          <button data-message="Demo only: this is not connected to a real service.">Recovering ID</button>
+          <button data-message="Demo only: this is not connected to a real service.">Student fund</button>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-head"><h2>DORMITORY</h2><button class="toggle" aria-label="Collapse section">−</button></div>
+        <div class="underline"></div>
+        <div class="links"><button data-message="Demo only: no dormitory fee can be paid here.">Dormitory fee</button></div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="contacts">Contacts <span>⌄</span></div>
+    <div class="social"><div class="social-icons">f  vk  ◎  in  ♥</div>2022 © Department of Student Services</div>
+  </footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.style.display = 'none', 2600);
+    }
+    document.querySelectorAll('.toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const section = button.closest('.section');
+        section.classList.toggle('collapsed');
+        button.textContent = section.classList.contains('collapsed') ? '+' : '−';
+      });
+    });
+    document.querySelectorAll('[data-message]').forEach(button => {
+      button.addEventListener('click', () => showToast(button.dataset.message));
+    });
+    document.querySelectorAll('.tab').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab === button));
+        if (button.dataset.tab === 'history') {
+          document.getElementById('tab-content').innerHTML =
+            '<section class="section"><h2>MY PAYMENTS</h2><div class="underline"></div><p style="font-size:12px;color:#666">No demo transactions.</p></section>';
+        } else {
+          location.reload();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
